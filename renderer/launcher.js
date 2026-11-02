@@ -549,6 +549,10 @@ $('btnOverlay').addEventListener('click', async () => {
   renderStatus(await api.getState());
 });
 api.onStatus(renderStatus);
+api.onUpdate((version) => {
+  $('version').textContent += ` · v${version} pronta: feche o app para atualizar`;
+  say(`Tem versão nova (${version})! Ela entra quando você fechar o app.`, 6000);
+});
 
 // chave e modelo
 $('apiKey').addEventListener('change', () => save({ geminiApiKey: $('apiKey').value.trim() }));

@@ -214,6 +214,23 @@ function listenDance() {
   }
 }
 
+// Atualização automática pelas Releases do GitHub (só na versão instalada: a portátil e o modo dev não atualizam).
+// Baixa em segundo plano e instala quando o app fechar.
+function checkUpdates() {
+  if (!app.isPackaged || process.env.PORTABLE_EXECUTABLE_FILE) return;
+  try {
+    const { autoUpdater } = require('electron-updater');
+    autoUpdater.on('update-downloaded', (info) => {
+      say(`Versão nova do Shaco IA (${info.version}) baixada! Ela entra quando você fechar o app.`);
+      if (launcher && !launcher.isDestroyed()) launcher.webContents.send('launcher:update', info.version);
+    });
+    autoUpdater.on('error', (err) => console.error('Atualização:', err.message));
+    autoUpdater.checkForUpdates().catch(() => {});
+  } catch (err) {
+    console.error('Atualização indisponível:', err.message);
+  }
+}
+
 function registerShortcuts() {
   globalShortcut.register('CommandOrControl+Shift+S', () => {
     if (paused) return;
@@ -800,6 +817,7 @@ app.whenReady().then(() => {
   createTray();
   registerShortcuts();
   listenDance();
+  checkUpdates();
   overlay.webContents.once('did-finish-load', () => {
     sendLayout();
     startPolling();

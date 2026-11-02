@@ -12,7 +12,8 @@
     "mock-select": "electron . --mock-select",
     "test": "node test/advisor.test.js",
     "cofre": "node scripts/cofre.js",
-    "dist": "electron-builder --win"
+    "dist": "electron-builder --win --publish never",
+    "release": "electron-builder --win --publish always"
   },
   "build": {
     "appId": "com.shaco.ia",
@@ -21,6 +22,12 @@
       "output": "dist"
     },
     "afterPack": "build/afterPack.js",
+    "publish": {
+      "provider": "github",
+      "owner": "DaviBernardosouzs",
+      "repo": "shaco-ia",
+      "releaseType": "release"
+    },
     "files": [
       "main.js",
       "preload.js",
@@ -62,6 +69,7 @@
     "rcedit": "^4.0.1"
   },
   "dependencies": {
+    "electron-updater": "^6.3.9",
     "uiohook-napi": "^1.5.4"
   }
 }

@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('launcher', {
   getHistory: () => ipcRenderer.invoke('launcher:getHistory'),
   getChallenge: () => ipcRenderer.invoke('launcher:getChallenge'),
   roulette: () => ipcRenderer.invoke('launcher:roulette'),
+  onUpdate: (cb) => ipcRenderer.on('launcher:update', (_e, version) => cb(version)),
   swapChallenge: () => ipcRenderer.invoke('launcher:swapChallenge'),
   onChallenge: (cb) => ipcRenderer.on('launcher:challenge', (_e, data) => cb(data)),
   onHistory: (cb) => ipcRenderer.on('launcher:history', (_e, list) => cb(list)),
