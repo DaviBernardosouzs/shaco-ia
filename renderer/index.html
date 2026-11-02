@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' https://ddragon.leagueoflegends.com https://raw.communitydragon.org; style-src 'self'; font-src 'self'; media-src data:; script-src 'self'">
+  <title>Shaco IA</title>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="panel" class="panel">
+    <header id="handle" class="head">
+      <img id="champIcon" class="champ" alt="">
+      <div class="head-text">
+        <div class="brand">Shaco IA</div>
+        <div id="sub" class="sub">aguardando partida…</div>
+      </div>
+      <div id="clock" class="clock"></div>
+      <button id="btnCollapse" class="collapse-btn" type="button" aria-label="Minimizar painel" title="Minimizar painel">
+        <svg viewBox="0 0 12 12"><path class="minus" d="M3 6h6"/><path class="plus" d="M6 3v6M3 6h6"/></svg>
+      </button>
+    </header>
+
+    <div id="speech" class="speech hidden">
+      <img id="speechMascot" class="speech-mascot" src="../assets/logo-64.png" alt="">
+      <p id="speechText"></p>
+    </div>
+
+    <div id="chat" class="chat hidden">
+      <form id="chatForm">
+        <input id="chatInput" type="text" placeholder="Pergunte ao Shaco… (Enter envia, Esc fecha)" autocomplete="off">
+      </form>
+    </div>
+
+    <div id="select" class="body hidden">
+      <section id="countersSection" class="hidden">
+        <h2 id="countersTitle">Banir</h2>
+        <div class="champ-grid"></div>
+      </section>
+      <section id="duoSection" class="hidden">
+        <h2>Supports</h2>
+        <div class="champ-grid"></div>
+      </section>
+      <section id="metaSection" class="hidden">
+        <h2 id="metaTitle">Meta</h2>
+        <div class="champ-grid"></div>
+      </section>
+      <section id="augSelect" class="hidden">
+        <h2>Aumentos</h2>
+        <div class="aug-box"></div>
+      </section>
+      <section id="runesSection">
+        <h2 id="selectTitle">Runas sugeridas</h2>
+        <div id="runesStatus" class="muted"></div>
+        <p id="selectTip" class="select-tip hidden"></p>
+        <div id="runes" class="runes"></div>
+        <button id="applyRunes" class="btn hidden" type="button">Aplicar runas no cliente</button>
+      </section>
+      <section id="skillsSelect" class="hidden">
+        <h2>Habilidades</h2>
+        <div class="skill-box"></div>
+      </section>
+      <section id="spellsSection" class="hidden">
+        <h2>Feitiços</h2>
+        <div id="spellsRow" class="spells-row"></div>
+      </section>
+      <section id="buildSection" class="hidden">
+        <h2>Build na loja</h2>
+        <div id="buildStatus" class="muted"></div>
+        <div id="buildItems" class="build-items"></div>
+      </section>
+    </div>
+
+    <div id="ingame" class="body hidden">
+      <section id="skillsGame" class="hidden">
+        <h2>Habilidades</h2>
+        <div class="skill-box"></div>
+      </section>
+
+      <section id="challengeGame" class="hidden">
+        <h2>Desafio do dia</h2>
+        <div id="challengeBox" class="challenge-box"></div>
+      </section>
+
+      <section id="augGame" class="hidden">
+        <h2>Aumentos</h2>
+        <div class="aug-box"></div>
+      </section>
+
+      <section id="farmSection" class="hidden">
+        <h2>Farm e visão</h2>
+        <div id="farm"></div>
+      </section>
+
+      <section id="objSection" class="hidden">
+        <h2>Objetivos</h2>
+        <ul id="objectives" class="objectives"></ul>
+      </section>
+
+      <section id="readSection" class="hidden">
+        <h2>Leitura do jogo</h2>
+        <div id="read"></div>
+      </section>
+
+      <section id="buySection">
+        <h2>Comprar</h2>
+        <div id="buyNow" class="buy-now"></div>
+        <ul id="recs" class="recs"></ul>
+      </section>
+
+      <section>
+        <h2 id="dmgTitle">Dano inimigo</h2>
+        <div class="dmg-bar"><span id="adBar" class="ad"></span><span id="apBar" class="ap"></span></div>
+        <div id="dmgLabel" class="dmg-label"></div>
+      </section>
+
+      <section id="lanesSection">
+        <h2>Rotas</h2>
+        <ul id="lanes" class="lanes"></ul>
+      </section>
+
+      <section id="teamSection" class="hidden">
+        <h2>Placar do time</h2>
+        <div id="team" class="team"></div>
+      </section>
+
+      <section>
+        <h2>Dicas</h2>
+        <ul id="tips" class="tips"></ul>
+      </section>
+    </div>
+
+    <!-- resumo pós-partida: fica até fechar ou até a próxima seleção -->
+    <div id="summary" class="body hidden">
+      <div class="sum-head">
+        <img id="sumIcon" class="sum-icon" alt="">
+        <div class="sum-title">
+          <b id="sumResult"></b>
+          <span id="sumSub"></span>
+        </div>
+        <button id="sumClose" class="sum-close" type="button" aria-label="Fechar resumo">×</button>
+      </div>
+      <div id="sumStats" class="sum-stats"></div>
+      <div id="sumDeaths" class="sum-deaths"></div>
+      <div id="sumChallenge" class="sum-challenge hidden"></div>
+      <section>
+        <h2>Análise do Shaco</h2>
+        <div id="sumReview"></div>
+      </section>
+    </div>
+
+    <div id="emote" class="emote hidden" aria-live="polite">
+      <img id="emoteImg" alt="">
+      <div id="emoteText" class="emote-text"></div>
+    </div>
+
+    <footer class="foot">
+      <span>Ctrl+Shift+A falar</span>
+      <span>Ctrl+Shift+M voz</span>
+      <span>Ctrl+Shift+S esconder</span>
+    </footer>
+  </div>
+  <!-- moldura em cima da barra de habilidades do jogo; posição ajustada uma vez pelo launcher -->
+  <div id="hud" class="hud hidden">
+    <div class="hud-help">
+      <b>Ajuste a moldura</b>
+      <span>Arraste até ficar em cima do Q, W, E e R do jogo. Roda do mouse muda o tamanho; Shift + roda, o espaço entre eles.</span>
+      <span class="hud-actions"><button id="hudSave" type="button">Salvar (Enter)</button><button id="hudReset" type="button">Posição padrão</button></span>
+    </div>
+    <div class="hud-row">
+      <div class="hud-slot" data-k="Q"><span>Q</span></div>
+      <div class="hud-slot" data-k="W"><span>W</span></div>
+      <div class="hud-slot" data-k="E"><span>E</span></div>
+      <div class="hud-slot" data-k="R"><span>R</span></div>
+    </div>
+  </div>
+
+  <script src="voice.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

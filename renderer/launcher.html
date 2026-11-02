@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: https://ddragon.leagueoflegends.com; style-src 'self'; font-src 'self'; media-src 'self' data:; script-src 'self'">
+  <title>Shaco IA</title>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+  <link rel="stylesheet" href="launcher.css">
+</head>
+<body>
+  <header class="titlebar">
+    <!-- bolinhas no estilo do iPhone/Mac: fechar, minimizar, expandir -->
+    <div class="lights">
+      <button id="btnClose" class="light close" type="button" aria-label="Fechar para a bandeja" title="Fechar (continua na bandeja)">
+        <svg viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg>
+      </button>
+      <button id="btnMin" class="light min" type="button" aria-label="Minimizar" title="Minimizar">
+        <svg viewBox="0 0 12 12"><path d="M3 6h6"/></svg>
+      </button>
+      <button id="btnMax" class="light max" type="button" aria-label="Expandir" title="Expandir">
+        <svg class="grow" viewBox="0 0 12 12"><path d="M3.2 7.2V3.2h4M8.8 4.8v4h-4"/></svg>
+        <svg class="shrink" viewBox="0 0 12 12"><path d="M6.6 2.8v2.6h2.6M5.4 9.2V6.6H2.8"/></svg>
+      </button>
+    </div>
+    <span class="titlebar-name"><img src="../assets/logo-64.png" alt="">Shaco IA</span>
+    <span></span>
+  </header>
+
+  <div class="app">
+    <!-- palco: quem é, como está, o que fazer -->
+    <section class="stage">
+      <div class="stage-top">
+        <div class="mascot-wrap">
+          <div id="bubble" class="bubble" hidden><span id="bubbleText"></span></div>
+          <button id="mascot" class="mascot idle" type="button" aria-label="Cutucar o Shaco">
+            <canvas id="sprite" class="sprite"></canvas>
+            <span class="zzz" aria-hidden="true">Z<span>z</span><span>z</span></span>
+          </button>
+          <div id="confetti" class="confetti" aria-hidden="true"></div>
+        </div>
+        <h1 class="wordmark" id="wordmark" aria-label="Shaco IA"></h1>
+        <div id="statusPill" class="pill waiting"><span class="dot"></span><span id="statusText">Aguardando partida</span></div>
+        <p id="statusDetail" class="stage-detail">Abra o LoL e entre numa partida.</p>
+      </div>
+
+      <div class="ready">
+        <h2 class="label">Pronto para jogar</h2>
+        <ul>
+          <li id="readyKey" class="pending"><span class="mark"></span><span class="ready-text">Chave do Gemini</span><span class="ready-state">pendente</span></li>
+          <li id="readyLeague" class="pending"><span class="mark"></span><span class="ready-text">Pasta do LoL</span><span class="ready-state">procurando</span></li>
+          <li id="readyPatch" class="pending"><span class="mark"></span><span class="ready-text">Dados do patch</span><span class="ready-state">baixando</span></li>
+        </ul>
+      </div>
+
+      <div id="challenge" class="challenge" hidden>
+        <div class="challenge-head">
+          <h2 class="label">Desafio do dia</h2>
+          <span id="challengeStreak" class="challenge-streak"></span>
+        </div>
+        <p id="challengeText" class="challenge-text"></p>
+        <div class="challenge-foot">
+          <span id="challengeState" class="challenge-state"></span>
+          <button id="btnSwapChallenge" class="link" type="button" title="Uma troca por dia">Trocar</button>
+        </div>
+      </div>
+
+      <button id="btnOverlay" class="hextech" type="button">
+        <span id="overlayLabel">Pausar overlay</span>
+      </button>
+    </section>
+
+    <!-- bastidores: configurações -->
+    <section class="backstage">
+      <nav class="tabs" role="tablist">
+        <button class="tab active" type="button" role="tab" data-tab="ai" aria-selected="true">Inteligência</button>
+        <button class="tab" type="button" role="tab" data-tab="game" aria-selected="false">Jogo</button>
+        <button class="tab" type="button" role="tab" data-tab="voice" aria-selected="false">Voz</button>
+        <button class="tab" type="button" role="tab" data-tab="panel" aria-selected="false">Painel</button>
+        <button class="tab" type="button" role="tab" data-tab="games" aria-selected="false">Partidas</button>
+        <button class="tab" type="button" role="tab" data-tab="chaos" aria-selected="false">Roleta</button>
+        <button class="tab" type="button" role="tab" data-tab="keys" aria-selected="false">Atalhos</button>
+      </nav>
+
+      <div class="panes">
+        <div class="pane" id="pane-ai">
+          <div class="field">
+            <label class="field-label" for="apiKey">Chave do Gemini</label>
+            <div class="input-row">
+              <div class="input-wrap">
+                <input id="apiKey" type="password" placeholder="Cole aqui a chave do Google AI Studio" autocomplete="off" spellcheck="false">
+                <button id="btnShowKey" class="eye" type="button" aria-label="Mostrar chave">
+                  <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <button id="btnSaveKey" class="btn primary" type="button">Salvar</button>
+            </div>
+            <button id="linkKey" class="link" type="button">Pegar uma chave grátis no Google AI Studio</button>
+          </div>
+
+          <div id="keyResult" class="result" hidden>
+            <span class="result-mark"></span>
+            <p id="keyResultText"></p>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="model">Modelo</label>
+            <input id="model" list="models" spellcheck="false">
+            <datalist id="models">
+              <option value="gemini-3.5-flash-lite">
+              <option value="gemini-3.5-flash">
+              <option value="gemini-3.1-flash-lite">
+              <option value="gemini-3.8-flash">
+            </datalist>
+            <p class="hint">O flash-lite responde em menos de um segundo. Se o modelo travar ou lotar, o Shaco troca sozinho.</p>
+          </div>
+        </div>
+
+        <div class="pane" id="pane-game" hidden>
+          <div class="row">
+            <div>
+              <div class="field-label">Aceitar partida automaticamente</div>
+              <p class="hint">Quando a fila encontrar jogo, o Shaco aceita por você. Bom para quando sair de perto do PC.</p>
+            </div>
+            <button id="autoAccept" class="switch" type="button" role="switch" aria-checked="false" aria-label="Aceitar partida automaticamente"><span></span></button>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="field-label">Build direto na loja</div>
+              <p class="hint">Ao travar o campeão, o Shaco monta a build para o modo e grava na loja do jogo, em itens recomendados. Ela some sozinha quando a partida acaba.</p>
+            </div>
+            <button id="autoBuild" class="switch" type="button" role="switch" aria-checked="true" aria-label="Build direto na loja"><span></span></button>
+          </div>
+
+          <div class="note">
+            <span class="label">Runas e habilidades</span>
+            <p>Ao travar o campeão, o Shaco cria uma página de runas <b>temporária</b> na hora e mostra a ordem das habilidades. Sem espaço para página nova, ele usa a página atual e devolve ela do jeito que estava no fim da partida.</p>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="field-label">Feitiços automáticos</div>
+              <p class="hint">Flash + o feitiço da sua posição: Golpear na selva, Teleporte no topo, Incendiar no meio, Curar no atirador. No ARAM e no Arena, os feitiços do modo.</p>
+            </div>
+            <button id="autoSpells" class="switch" type="button" role="switch" aria-checked="false" aria-label="Feitiços automáticos"><span></span></button>
+          </div>
+
+          <div class="field" id="flashField">
+            <span class="field-label">Flash na tecla</span>
+            <div class="segmented flash-keys" role="radiogroup" aria-label="Tecla do Flash">
+              <button class="seg" type="button" role="radio" data-flash="D">Flash no D</button>
+              <button class="seg" type="button" role="radio" data-flash="F">Flash no F</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="field-label">Playlist do campeão</div>
+              <p class="hint">Ao travar o campeão, o Shaco abre o Spotify já buscando playlists com o nome dele. Sem o app do Spotify instalado, abre o Spotify Web.</p>
+            </div>
+            <button id="spotifyPlaylist" class="switch" type="button" role="switch" aria-checked="false" aria-label="Playlist do campeão"><span></span></button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="leaguePath">Pasta do League of Legends</label>
+            <div class="input-row">
+              <input id="leaguePath" type="text" spellcheck="false">
+              <button id="btnBrowse" class="btn" type="button">Procurar</button>
+            </div>
+            <p id="leagueHint" class="hint">Usada para ler a seleção de campeões, aplicar runas e gravar a build.</p>
+          </div>
+        </div>
+
+        <div class="pane" id="pane-voice" hidden>
+          <div class="row">
+            <div>
+              <div class="field-label">Voz do Shaco</div>
+              <p class="hint">Lê dicas e respostas em voz alta durante a partida.</p>
+            </div>
+            <button id="voice" class="switch" type="button" role="switch" aria-checked="true" aria-label="Voz do Shaco"><span></span></button>
+          </div>
+
+          <div class="voice-box">
+            <div class="segmented" role="radiogroup" aria-label="Estilo da voz">
+              <button id="styleGemini" class="seg" type="button" role="radio" data-style="gemini">Gemini</button>
+              <button id="styleShaco" class="seg" type="button" role="radio" data-style="shaco">Bobo (Windows)</button>
+              <button id="styleNatural" class="seg" type="button" role="radio" data-style="natural">Natural</button>
+            </div>
+            <div id="geminiVoices" class="chips" role="radiogroup" aria-label="Timbre do Gemini">
+              <button class="chip" type="button" role="radio" data-voice="Algenib">Rouca</button>
+              <button class="chip" type="button" role="radio" data-voice="Enceladus">Sussurrada</button>
+              <button class="chip" type="button" role="radio" data-voice="Charon">Grave</button>
+              <button class="chip" type="button" role="radio" data-voice="Puck">Animada</button>
+            </div>
+            <p id="geminiHint" class="hint">Voz original e teatral gerada pelo Gemini. Leva alguns segundos para começar a falar; se falhar, o Shaco usa a voz do Windows.</p>
+            <div id="voiceSliders" class="sliders">
+              <label class="slider" for="voicePitch">
+                <span class="slider-head"><span>Tom</span><output id="pitchOut"></output></span>
+                <input id="voicePitch" type="range" min="0.1" max="1.2" step="0.05">
+                <span class="slider-ends"><span>grave</span><span>agudo</span></span>
+              </label>
+              <label class="slider" for="voiceRate">
+                <span class="slider-head"><span>Velocidade</span><output id="rateOut"></output></span>
+                <input id="voiceRate" type="range" min="0.6" max="1.4" step="0.05">
+                <span class="slider-ends"><span>arrastada</span><span>rápida</span></span>
+              </label>
+            </div>
+            <div class="voice-actions">
+              <button id="btnPreview" class="btn" type="button">Ouvir exemplo</button>
+              <span id="voiceName" class="hint"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pane" id="pane-panel" hidden>
+          <div class="sliders">
+            <label class="slider" for="overlayScale">
+              <span class="slider-head"><span>Tamanho</span><output id="scaleOut"></output></span>
+              <input id="overlayScale" type="range" min="0.7" max="1.5" step="0.05">
+              <span class="slider-ends"><span>menor</span><span>maior</span></span>
+            </label>
+            <label class="slider" for="overlayOpacity">
+              <span class="slider-head"><span>Fundo</span><output id="opacityOut"></output></span>
+              <input id="overlayOpacity" type="range" min="0.3" max="1" step="0.05">
+              <span class="slider-ends"><span>transparente</span><span>sólido</span></span>
+            </label>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="field-label">Modo compacto</div>
+              <p class="hint">Mostra só a fala do Shaco e o próximo item. O resto aparece de volta quando desligar.</p>
+            </div>
+            <button id="overlayCompact" class="switch" type="button" role="switch" aria-checked="false" aria-label="Modo compacto"><span></span></button>
+          </div>
+
+          <div class="voice-actions">
+            <button id="btnOverlayPreview" class="btn" type="button">Mostrar exemplo na tela</button>
+            <span class="hint">O painel aparece por 10 segundos com uma partida de exemplo.</span>
+          </div>
+
+          <div class="voice-actions">
+            <button id="btnCalibrateHud" class="btn" type="button">Ajustar moldura das habilidades</button>
+            <span class="hint">Quando tiver ponto de habilidade, uma moldura pisca em cima da habilidade que deve subir. Ajuste uma vez com o jogo aberto para ela ficar em cima do Q, W, E e R.</span>
+          </div>
+
+          <div class="note">
+            <span class="label">Modo de vídeo</span>
+            <p>No LoL, use <b>Sem bordas</b>. Em tela cheia o painel do Shaco não aparece por cima do jogo. Para mudar o painel de lugar, arraste pelo topo dele.</p>
+          </div>
+        </div>
+
+        <div class="pane" id="pane-games" hidden>
+          <p class="hint">As últimas 20 partidas, com a análise do Shaco. Clique numa partida para ver os pontos para melhorar.</p>
+          <ul id="games" class="games"></ul>
+        </div>
+
+        <div class="pane" id="pane-chaos" hidden>
+          <p class="hint">A roleta do caos sorteia um campeão, cinco itens, uma bota e a habilidade para maximizar. Para partidas normais com os amigos: quanto menos sentido a build fizer, melhor.</p>
+          <div class="roulette">
+            <div class="roulette-wheel"><img id="rouletteFace" alt=""><span id="rouletteQ" class="roulette-q">?</span></div>
+            <div class="roulette-info">
+              <b id="rouletteName">Gire para descobrir</b>
+              <span id="rouletteTitle" class="hint"></span>
+            </div>
+          </div>
+          <div id="rouletteBuild" class="roulette-build" hidden>
+            <div id="rouletteItems" class="roulette-items"></div>
+            <p id="rouletteExtra" class="hint"></p>
+          </div>
+          <button id="btnRoulette" class="hextech roulette-btn" type="button"><span>Girar a roleta</span></button>
+        </div>
+
+        <div class="pane" id="pane-keys" hidden>
+          <ul class="keys">
+            <li><span class="combo"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>A</kbd></span><span>Abrir o chat e perguntar ao Shaco</span></li>
+            <li><span class="combo"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd></span><span>Ligar ou desligar a voz</span></li>
+            <li><span class="combo"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></span><span>Esconder ou mostrar o painel</span></li>
+          </ul>
+          <p class="hint">No chat, Enter envia e Esc fecha. Depois clique no jogo para ele voltar a receber o teclado.</p>
+          <button id="btnTour" class="btn" type="button">Ver o tutorial de novo</button>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span id="version">v0.1.0</span>
+        <span id="saved" class="saved">Salvo</span>
+      </footer>
+    </section>
+  </div>
+
+  <!-- tutorial: destaca uma parte da janela por vez -->
+  <div id="tour" class="tour" hidden>
+    <div id="tourSpot" class="tour-spot"></div>
+    <div id="tourCard" class="tour-card" role="dialog" aria-labelledby="tourTitle">
+      <span id="tourStep" class="label"></span>
+      <h3 id="tourTitle"></h3>
+      <p id="tourText"></p>
+      <div class="tour-actions">
+        <button id="tourSkip" class="link" type="button">Pular tutorial</button>
+        <span class="tour-nav">
+          <button id="tourBack" class="btn" type="button">Voltar</button>
+          <button id="tourNext" class="btn primary" type="button">Próximo</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- resultado do "Salvar" da chave: certinho verde ou X vermelho no meio da tela -->
+  <div id="verdict" class="verdict" hidden aria-live="assertive">
+    <svg class="verdict-icon" viewBox="0 0 100 100">
+      <circle class="ring" cx="50" cy="50" r="44"/>
+      <path class="mark-ok" d="M30 52l13 13 27-29"/>
+      <path class="mark-bad" d="M35 35l30 30M65 35L35 65"/>
+    </svg>
+    <span id="verdictText"></span>
+  </div>
+
+  <script src="voice.js"></script>
+  <script src="sfx.js"></script>
+  <script src="sprite.js"></script>
+  <script src="launcher.js"></script>
+</body>
+</html>
