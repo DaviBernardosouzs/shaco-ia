@@ -1,0 +1,63 @@
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('Barlow-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('Barlow-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('Barlow-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('BarlowCondensed-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('BarlowCondensed-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('Cinzel-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('Cinzel-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('PixelifySans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('PixelifySans-700.woff2') format('woff2');
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Shaco Head Animation",
+  "version": "2.0",
+  "source": "Folha 3x2 da cabeça do Shaco, recortada e alinhada pelo chapéu",
+  "head": {
+    "frameCount": 6,
+    "frameWidth": 320,
+    "frameHeight": 320,
+    "frames": [
+      "head/frame_00.png",
+      "head/frame_01.png",
+      "head/frame_02.png",
+      "head/frame_03.png",
+      "head/frame_04.png",
+      "head/frame_05.png"
+    ]
+  }
+}
