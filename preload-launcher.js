@@ -1,0 +1,26 @@
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('launcher', {
+  getConfig: () => ipcRenderer.invoke('launcher:getConfig'),
+  saveConfig: (config) => ipcRenderer.invoke('launcher:saveConfig', config),
+  getState: () => ipcRenderer.invoke('launcher:getState'),
+  setPaused: (paused) => ipcRenderer.invoke('launcher:setPaused', paused),
+  testKey: () => ipcRenderer.invoke('launcher:testKey'),
+  pickFolder: () => ipcRenderer.invoke('launcher:pickFolder'),
+  openKeyPage: () => ipcRenderer.send('launcher:openKeyPage'),
+  previewOverlay: () => ipcRenderer.send('launcher:previewOverlay'),
+  tts: (text) => ipcRenderer.invoke('shaco:tts', text),
+  animManifest: () => ipcRenderer.invoke('launcher:animManifest'),
+  calibrateHud: () => ipcRenderer.send('launcher:calibrateHud'),
+  minimize: () => ipcRenderer.send('launcher:minimize'),
+  toggleMaximize: () => ipcRenderer.send('launcher:toggleMaximize'),
+  onMaximized: (cb) => ipcRenderer.on('launcher:maximized', (_e, on) => cb(on)),
+  hide: () => ipcRenderer.send('launcher:hide'),
+  onStatus: (cb) => ipcRenderer.on('launcher:status', (_e, data) => cb(data)),
+  getHistory: () => ipcRenderer.invoke('launcher:getHistory'),
+  getChallenge: () => ipcRenderer.invoke('launcher:getChallenge'),
+  roulette: () => ipcRenderer.invoke('launcher:roulette'),
+  swapChallenge: () => ipcRenderer.invoke('launcher:swapChallenge'),
+  onChallenge: (cb) => ipcRenderer.on('launcher:challenge', (_e, data) => cb(data)),
+  onHistory: (cb) => ipcRenderer.on('launcher:history', (_e, list) => cb(list)),
+});

@@ -1,0 +1,86 @@
+{
+  "activePlayer": {
+    "riotId": "Davi#BR1",
+    "riotIdGameName": "Davi",
+    "summonerName": "Davi#BR1",
+    "level": 9,
+    "currentGold": 1350.4,
+    "abilities": {
+      "Q": { "abilityLevel": 1 }, "W": { "abilityLevel": 2 }, "E": { "abilityLevel": 4 }, "R": { "abilityLevel": 1 }
+    }
+  },
+  "allPlayers": [
+    {
+      "championName": "Garen", "rawChampionName": "game_character_displayname_Garen",
+      "riotId": "Aliado1#BR1", "summonerName": "Aliado1#BR1", "team": "ORDER", "position": "TOP",
+      "level": 10, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 3, "deaths": 1, "assists": 1, "creepScore": 95, "wardScore": 4 },
+      "items": [ { "itemID": 1054, "count": 1 }, { "itemID": 3047, "count": 1 }, { "itemID": 1037, "count": 1 }, { "itemID": 1028, "count": 1 } ]
+    },
+    {
+      "championName": "Shaco", "rawChampionName": "game_character_displayname_Shaco",
+      "riotId": "Davi#BR1", "summonerName": "Davi#BR1", "team": "ORDER", "position": "JUNGLE",
+      "level": 9, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 2, "deaths": 2, "assists": 4, "creepScore": 70, "wardScore": 6 },
+      "items": [ { "itemID": 1036, "count": 1 }, { "itemID": 3134, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    },
+    {
+      "championName": "Syndra", "rawChampionName": "game_character_displayname_Syndra",
+      "riotId": "Aliado3#BR1", "summonerName": "Aliado3#BR1", "team": "ORDER", "position": "MIDDLE",
+      "level": 9, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 1, "deaths": 2, "assists": 2, "creepScore": 102, "wardScore": 3 },
+      "items": [ { "itemID": 1056, "count": 1 }, { "itemID": 1052, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    },
+    {
+      "championName": "Caitlyn", "rawChampionName": "game_character_displayname_Caitlyn",
+      "riotId": "Aliado4#BR1", "summonerName": "Aliado4#BR1", "team": "ORDER", "position": "BOTTOM",
+      "level": 8, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 0, "deaths": 3, "assists": 1, "creepScore": 88, "wardScore": 2 },
+      "items": [ { "itemID": 1055, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    },
+    {
+      "championName": "Thresh", "rawChampionName": "game_character_displayname_Thresh",
+      "riotId": "Aliado5#BR1", "summonerName": "Aliado5#BR1", "team": "ORDER", "position": "UTILITY",
+      "level": 7, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 0, "deaths": 2, "assists": 3, "creepScore": 12, "wardScore": 14 },
+      "items": [ { "itemID": 1029, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    },
+    {
+      "championName": "Darius", "rawChampionName": "game_character_displayname_Darius",
+      "riotId": "Inimigo1#BR1", "summonerName": "Inimigo1#BR1", "team": "CHAOS", "position": "TOP",
+      "level": 9, "isDead": true, "respawnTimer": 18.4,
+      "scores": { "kills": 1, "deaths": 3, "assists": 0, "creepScore": 80, "wardScore": 2 },
+      "items": [ { "itemID": 1054, "count": 1 }, { "itemID": 1001, "count": 1 }, { "itemID": 1036, "count": 1 } ]
+    },
+    {
+      "championName": "Lee Sin", "rawChampionName": "game_character_displayname_LeeSin",
+      "riotId": "Inimigo2#BR1", "summonerName": "Inimigo2#BR1", "team": "CHAOS", "position": "JUNGLE",
+      "level": 9, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 2, "deaths": 2, "assists": 3, "creepScore": 74, "wardScore": 5 },
+      "items": [ { "itemID": 3134, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    },
+    {
+      "championName": "Ahri", "rawChampionName": "game_character_displayname_Ahri",
+      "riotId": "Inimigo3#BR1", "summonerName": "Inimigo3#BR1", "team": "CHAOS", "position": "MIDDLE",
+      "level": 10, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 2, "deaths": 1, "assists": 2, "creepScore": 110, "wardScore": 3 },
+      "items": [ { "itemID": 1056, "count": 1 }, { "itemID": 3802, "count": 1 }, { "itemID": 3020, "count": 1 } ]
+    },
+    {
+      "championName": "Jinx", "rawChampionName": "game_character_displayname_Jinx",
+      "riotId": "Inimigo4#BR1", "summonerName": "Inimigo4#BR1", "team": "CHAOS", "position": "BOTTOM",
+      "level": 10, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 5, "deaths": 0, "assists": 1, "creepScore": 105, "wardScore": 2 },
+      "items": [ { "itemID": 1055, "count": 1 }, { "itemID": 1038, "count": 1 }, { "itemID": 3006, "count": 1 } ]
+    },
+    {
+      "championName": "Soraka", "rawChampionName": "game_character_displayname_Soraka",
+      "riotId": "Inimigo5#BR1", "summonerName": "Inimigo5#BR1", "team": "CHAOS", "position": "UTILITY",
+      "level": 8, "isDead": false, "respawnTimer": 0,
+      "scores": { "kills": 0, "deaths": 1, "assists": 6, "creepScore": 15, "wardScore": 12 },
+      "items": [ { "itemID": 1028, "count": 1 }, { "itemID": 1001, "count": 1 } ]
+    }
+  ],
+  "events": { "Events": [] },
+  "gameData": { "gameMode": "CLASSIC", "gameTime": 612.0, "mapName": "Map11", "mapNumber": 11, "mapTerrain": "Default" }
+}
