@@ -1,33 +1,64 @@
 # Shaco IA
 
-Overlay para League of Legends que conversa com você (por voz e texto) e mostra, em tempo real:
+Assistente de League of Legends com a cara do Shaco: um painel por cima do jogo e uma janela (launcher) com tudo para você jogar melhor, e rir no caminho.
 
-- **Runas** na seleção de campeões, com um botão que cria a página no cliente.
-- **Plano inicial** quando a partida começa (rota de limpeza da selva ou plano da fase de rotas).
-- **Itens situacionais** contra a composição inimiga (dano físico/mágico, cura, tanques). Avisa quando você já tem ouro e, quando você morre, diz o que comprar.
-- **Comparação de rotas**: ouro em itens, nível e KDA de cada rota, com quem está na frente ou atrás.
-- **Chat**: pergunte qualquer coisa (matchup, item, como jogar contra alguém) e o Shaco responde em voz alta.
+## Baixar
 
-## Instalar
+**[⬇️ Baixar a versão mais recente](https://github.com/DaviBernardosouzs/shaco-ia/releases/latest)** e escolha:
 
-Ninguém precisa instalar Node: o app já leva tudo dentro dele. Escolha uma das duas versões em `dist/`:
+- **`ShacoIA-Setup.exe`**: instalador (recomendado). Cria atalhos, aparece em "Adicionar ou remover programas" e **se atualiza sozinho** quando sai versão nova.
+- **`ShacoIA.exe`**: portátil. É só abrir, sem instalar (não se atualiza sozinho).
 
-- **`ShacoIA-Setup.exe`**: instalador. Cria atalhos na Área de Trabalho e no menu Iniciar e aparece em "Adicionar ou remover programas" para desinstalar.
-- **`ShacoIA.exe`**: portátil. É só abrir, sem instalar.
+Não precisa instalar mais nada. Funciona no Windows 10 e 11.
 
-Como o app não é assinado digitalmente, o Windows pode mostrar "O Windows protegeu o computador".
-Clique em **Mais informações** e depois em **Executar assim mesmo**.
+> **O Windows pode mostrar "O Windows protegeu o computador".** O app não tem assinatura digital (o certificado é pago).
+> Clique em **Mais informações** e depois em **Executar assim mesmo**. É só na primeira vez.
 
 ## Primeiro uso
 
-Na janela do Shaco IA:
+Na primeira vez que abre, o Shaco mostra um tutorial. Em resumo:
 
-1. Clique em **Como pegar uma chave grátis**, crie a chave do Gemini e cole no campo.
-2. Clique em **Testar**.
-3. Se o LoL não estiver em `C:\Riot Games\League of Legends`, clique em **Procurar** e escolha a pasta.
+1. **Chave do Gemini (grátis):** clique em "Pegar uma chave grátis no Google AI Studio", cole a chave e aperte **Salvar**. O certinho verde mostra que deu certo.
+2. **Pasta do LoL:** se o jogo não estiver em `C:\Riot Games\League of Legends`, escolha a pasta na aba **Jogo**.
+3. **No LoL, use o modo de vídeo "Sem bordas".** Em tela cheia exclusiva nenhum overlay aparece.
+4. **Moldura das habilidades:** na primeira partida, ajuste na aba **Painel**.
 
-Fechar a janela deixa o Shaco rodando na bandeja do Windows (perto do relógio). Para sair de vez,
-clique com o botão direito no ícone e escolha **Sair**. As configurações ficam em `%APPDATA%\Shaco IA\config.json`.
+Fechar a janela deixa o Shaco na bandeja do Windows, perto do relógio. Para sair, botão direito no ícone → **Sair**.
+
+## O que ele faz
+
+**Seleção de campeões**
+- Página de runas **temporária**, criada na hora e removida no fim da partida.
+- **Build na loja** a partir da build mais usada do campeão (recomendação da própria Riot), adaptada à composição inimiga.
+- Ordem das habilidades, counters para banir, meta da rota e melhores supports quando você é atirador.
+- Melhores **Aumentos** na Arena e no ARAM: Desordem.
+- Opcional: abre playlists do seu campeão no Spotify.
+
+**Durante a partida**
+- Itens que combinam com o seu campeão, ordem das habilidades com moldura em cima do Q/W/E/R.
+- Farm e visão por minuto, tempo até os objetivos, quem está vivo e rotas na frente ou atrás.
+- Reações animadas do Shaco: abates, multiabates, First Blood, torres, dragões, Barão, vitória, derrota, dança (Ctrl+3) e mais.
+- Chat e voz: pergunte qualquer coisa sobre o jogo.
+- Painel minimizável (botão **−** no canto).
+
+**Depois da partida**
+- Resumo com 3 pontos para melhorar (IA) e histórico na aba **Partidas**.
+- **Desafio do dia** com sequência de dias 🔥.
+
+**Diversão:** roleta do caos com campeão e build aleatórios, falas do Shaco ao clicar nele.
+
+| Atalho | Ação |
+| --- | --- |
+| Ctrl+Shift+A | Abrir o chat (Enter envia, Esc fecha) |
+| Ctrl+Shift+M | Ligar/desligar a voz |
+| Ctrl+Shift+S | Mostrar/esconder o painel |
+
+## Regras da Riot
+
+O Shaco IA só usa as APIs oficiais e locais do jogo (Live Client Data e o cliente do LoL), as mesmas de apps como Blitz e Porofessor.
+Ele **não** mostra informação escondida (posição do inimigo, recarga de feitiços inimigos, timers de campos da selva) e **não dá ordens** como "ganke o meio agora": mostra o que o placar já mostra e a decisão fica com você.
+Os tempos de Dragão, Arauto e Barão são os mesmos que o próprio jogo exibe.
+Mesmo assim, use por sua conta e risco. O Shaco IA não é afiliado à Riot Games.
 
 ## Desenvolvimento
 
@@ -37,32 +68,12 @@ npm start               # modo real
 npm run mock            # partida simulada
 npm run mock-select     # seleção de campeões simulada
 npm test
-npm run dist            # gera dist/ShacoIA.exe
+npm run dist            # gera dist/ShacoIA-Setup.exe e dist/ShacoIA.exe
+npm run cofre           # atualiza as builds por classe e o cofre do Obsidian (uma vez por patch)
 ```
 
-O `npm run dist` precisa rodar numa pasta de caminho curto (o NSIS não aceita caminhos com mais de 260 caracteres).
+### Publicar uma versão
 
-**No LoL, use o modo de janela "Sem bordas" (Borderless).** Em tela cheia exclusiva nenhum overlay aparece.
-
-| Atalho | Ação |
-| --- | --- |
-| Ctrl+Shift+A | Abrir o chat (Enter envia, Esc fecha) |
-| Ctrl+Shift+M | Ligar/desligar a voz |
-| Ctrl+Shift+S | Mostrar/esconder |
-
-Para mover o painel, arraste pelo topo. Depois de usar o chat, clique no jogo para ele voltar a receber o teclado.
-
-## Como funciona
-
-- **Partida**: Live Client Data API oficial (`https://127.0.0.1:2999`), que só traz o que você vê no placar (Tab).
-- **Seleção de campeões e runas**: API local do cliente (LCU), a mesma que Blitz e Porofessor usam. O Shaco IA só apaga ou substitui páginas de runas com nome começando por "Shaco IA".
-- **Itens, campeões e runas**: Data Dragon da Riot, em pt-BR, atualizado a cada patch.
-- **Conversa**: Gemini. A voz usa a síntese de voz do Windows (voz pt-BR).
-
-## Regras da Riot
-
-As regras da Riot para apps de terceiros proíbem mostrar informação escondida (posição do inimigo,
-recarga de feitiços, timers de monstros) e dar ordens em tempo real como "ganke o meio agora".
-Por isso o Shaco IA fala de itens, runas, matchups e plano inicial, mas não manda gankar nem fazer objetivo:
-ele mostra quais rotas estão na frente ou atrás e a decisão fica com você.
-Mesmo assim, use por sua conta e risco.
+1. Suba a versão no `package.json` (por exemplo, `0.3.0`) e faça o commit.
+2. Crie e envie a tag: `git tag v0.3.0` e `git push origin v0.3.0`.
+3. O GitHub Actions monta o instalador num Windows limpo e publica na Release. Quem já instalou recebe a atualização sozinho.
