@@ -1,0 +1,10 @@
+node_modules/
+config.json
+
+# build (os executáveis vão nas Releases do GitHub, não no código)
+dist/
+*.exe
+*.blockmap
+
+# repositório git vazio criado por engano dentro do projeto
+shaco-ia/

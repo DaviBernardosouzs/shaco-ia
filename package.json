@@ -1,0 +1,67 @@
+{
+  "name": "shaco-ia",
+  "productName": "Shaco IA",
+  "version": "0.2.0",
+  "author": "Davi",
+  "description": "Overlay assistente para partidas de League of Legends",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "mock": "electron . --mock",
+    "mock-select": "electron . --mock-select",
+    "test": "node test/advisor.test.js",
+    "cofre": "node scripts/cofre.js",
+    "dist": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.shaco.ia",
+    "productName": "Shaco IA",
+    "directories": {
+      "output": "dist"
+    },
+    "afterPack": "build/afterPack.js",
+    "files": [
+      "main.js",
+      "preload.js",
+      "preload-launcher.js",
+      "src/**",
+      "renderer/**",
+      "assets/**",
+      "mock/**",
+      "!config.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "artifactName": "ShacoIA-Setup.exe",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Shaco IA",
+      "uninstallDisplayName": "Shaco IA",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "ShacoIA.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "rcedit": "^4.0.1"
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.4"
+  }
+}

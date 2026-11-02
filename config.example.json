@@ -1,0 +1,6 @@
+{
+  "geminiApiKey": "COLE_SUA_CHAVE_AQUI",
+  "geminiModel": "gemini-3.5-flash-lite",
+  "voice": true,
+  "leaguePath": "C:\\Riot Games\\League of Legends"
+}
