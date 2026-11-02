@@ -1,0 +1,32 @@
+# Ao publicar uma tag de versão (v0.2.0, v0.3.0...), monta o instalador num Windows limpo
+# e publica na Release do GitHub. O app instalado se atualiza sozinho a partir dessas Releases.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Testes
+        run: npm test
+
+      - name: Monta e publica o instalador
+        run: npm run release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
